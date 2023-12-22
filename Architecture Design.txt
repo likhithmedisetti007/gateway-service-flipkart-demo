@@ -1,0 +1,44 @@
+#For a backend development of an ecommerce website like Flipkart, we need to have few parent services like
+
+category-service
+notification-service
+account-service
+cart-service
+
+#Under each parent service, there can be many child services.
+
+#Here, as per the given requirement we need to focus on category-service alone
+
+category-service:
+
+1) list of categories
+ ex: Grocery, Fashion, Electronics etc.. for each category, we will develop a new service like
+
+grocery-service
+fashion-service
+electronics-service
+
+#There can be sub categories under each category and sub-categories are nothing but a collection in MongoDB
+
+#Here, as per the given requirement we have only two sub categories provided. mensShirts in fashion-service and laptops or mobiles in electronics service
+
+#As per the requirement, we will be throwing an error message if any products requested apart from the available category and its sub categories.
+
+#Consumer can get the product details in sub categories with varied filters like priceRange, availability, attributes ( if applicable ) as per the requirement
+#Only Admin can add / update / delete any products at any time as per the requirement
+
+#We need to identify each request made if it is from a consumer or admin and then act accordingly. Hence, we need to have some kind of authentication and authorization to identify a consumer or admin.
+Note: For getting the products from category-service, even a guest user can be utilized ( Will implement this based on feasibility )
+
+The Flowchart can be like
+
+gateway-service --> category-service --> 1) grocery-service
+										 2) fashion-service
+										 3) electronics-service
+										 
+eureka-service for service discovery
+zipkin-service for distributed logging mechanism
+
+mapstruct-mapper for mapping the object
+swagger for API Docs
+MongoDB for database
