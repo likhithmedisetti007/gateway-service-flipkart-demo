@@ -1,0 +1,110 @@
+[  {    "name": "Smartphone",    "brand": "Brand Name",    "description": "Powerful and stylish smartphone with high-end features.",    "price": {      "currency": "USD",      "amount": 799.99    },    "inventory": {      "total": 50,      "available": 40,      "reserved": 10    },    "attributes": [      {        "name": "Color",        "value": "Black"      },      {        "name": "Storage",        "value": "128GB"      }    ]
+  },
+  {
+    "name": "Laptop",
+    "brand": "Brand Name",
+    "description": "Powerful and lightweight laptop for work and entertainment.",
+    "price": {
+      "currency": "USD",
+      "amount": 1299.99
+    },
+    "inventory": {
+      "total": 25,
+      "available": 20,
+      "reserved": 5
+    },
+    "attributes": [
+      {
+        "name": "Color",
+        "value": "Silver"
+      },
+      {
+        "name": "Processor",
+        "value": "Intel Core i7"
+      },
+      {
+        "name": "Memory",
+        "value": "16GB"
+      },
+      {
+        "name": "Storage",
+        "value": "512GB SSD"
+      }
+    ]
+  },
+  {
+    "name": "Smart Watch",
+    "brand": "Brand Name",
+    "description": "Sleek and functional smart watch for fitness and everyday use.",
+    "price": {
+      "currency": "USD",
+      "amount": 249.99
+    },
+    "inventory": {
+      "total": 60,
+      "available": 50,
+      "reserved": 10
+    },
+    "attributes": [
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Features",
+        "value": "Heart rate monitor, GPS, NFC"
+      }
+    ]
+  },
+  {
+    "name": "Wireless Headphones",
+    "brand": "Brand Name",
+    "description": "High-quality wireless headphones for music and calls.",
+    "price": {
+      "currency": "USD",
+      "amount": 199.99
+    },
+    "inventory": {
+      "total": 40,
+      "available": 30,
+      "reserved": 10
+    },
+    "attributes": [
+      {
+        "name": "Color",
+        "value": "White"
+      },
+      {
+        "name": "Battery Life",
+        "value": "Up to 30 hours"
+      }
+    ]
+  },
+  {
+    "name": "Smart Speaker",
+    "brand": "Brand Name",
+    "description": "Intelligent and powerful smart speaker for music and home automation.",
+    "price": {
+      "currency": "USD",
+      "amount": 349.99
+    },
+    "inventory": {
+      "total": 30,
+      "available": 25,
+      "reserved": 5
+    },
+    "attributes": [
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Voice Assistant",
+        "value": "Google Assistant"
+      },
+      {
+        "name": "Connectivity",
+        "value": "Bluetooth, Wi-Fi"
+      }
+    ]
+  }]
