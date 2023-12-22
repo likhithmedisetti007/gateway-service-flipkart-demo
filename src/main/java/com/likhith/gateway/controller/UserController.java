@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.likhith.gateway.document.User;
 import com.likhith.gateway.dto.UserResponse;
+import com.likhith.gateway.exception.ValidationException;
 import com.likhith.gateway.service.CustomUserDetailsService;
 
 @RestController
@@ -36,10 +37,10 @@ public class UserController {
 		List<UserResponse> responseList = service.getAllUsers();
 
 		if (CollectionUtils.isEmpty(responseList)) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
-		} else {
-			return ResponseEntity.ok().body(responseList);
+			throw new ValidationException(HttpStatus.NOT_FOUND.value(), "No Users found");
 		}
+
+		return ResponseEntity.ok().body(responseList);
 
 	}
 
@@ -52,10 +53,10 @@ public class UserController {
 		UserResponse response = service.getUser(username);
 
 		if (ObjectUtils.isEmpty(response)) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
-		} else {
-			return ResponseEntity.ok().body(response);
+			throw new ValidationException(HttpStatus.NOT_FOUND.value(), "No User found");
 		}
+
+		return ResponseEntity.ok().body(response);
 
 	}
 
@@ -65,20 +66,20 @@ public class UserController {
 		UserResponse response = service.getOtherUser(username);
 
 		if (ObjectUtils.isEmpty(response)) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
-		} else {
-			return ResponseEntity.ok().body(response);
+			throw new ValidationException(HttpStatus.NOT_FOUND.value(), "No User found");
 		}
+
+		return ResponseEntity.ok().body(response);
 
 	}
 
 	@PostMapping("/createUser")
-	public ResponseEntity<String> createUser(@RequestBody User user) {
+	public ResponseEntity<UserResponse> createUser(@RequestBody User user) {
 		return ResponseEntity.ok().body(service.createUser(user));
 	}
 
 	@PutMapping("/updateUser")
-	public ResponseEntity<String> updateUser(@RequestBody User user) {
+	public ResponseEntity<UserResponse> updateUser(@RequestBody User user) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
@@ -86,12 +87,12 @@ public class UserController {
 		if (username.equalsIgnoreCase(user.getUsername())) {
 			return ResponseEntity.ok().body(service.updateUser(user));
 		} else {
-			return ResponseEntity.badRequest().body("Cannot update other User");
+			throw new ValidationException(HttpStatus.BAD_REQUEST.value(), "Cannot update other User");
 		}
 	}
 
 	@PutMapping("/updateOtherUser")
-	public ResponseEntity<String> updateOtherUser(@RequestBody User user) {
+	public ResponseEntity<UserResponse> updateOtherUser(@RequestBody User user) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
@@ -99,13 +100,13 @@ public class UserController {
 		if (!username.equalsIgnoreCase(user.getUsername())) {
 			return ResponseEntity.ok().body(service.updateOtherUser(user));
 		} else {
-			return ResponseEntity.badRequest().body("Cannot update same User");
+			throw new ValidationException(HttpStatus.BAD_REQUEST.value(), "Cannot update same User");
 		}
 
 	}
 
 	@DeleteMapping("/deleteUser")
-	public ResponseEntity<String> deleteUser() {
+	public ResponseEntity<UserResponse> deleteUser() {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
@@ -114,7 +115,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/deleteOtherUser/{username}")
-	public ResponseEntity<String> deleteOtherUser(@PathVariable("username") String username) {
+	public ResponseEntity<UserResponse> deleteOtherUser(@PathVariable("username") String username) {
 		return ResponseEntity.ok().body(service.deleteOtherUser(username));
 	}
 

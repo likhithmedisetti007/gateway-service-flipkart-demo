@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +18,8 @@ import org.springframework.util.ObjectUtils;
 
 import com.likhith.gateway.document.User;
 import com.likhith.gateway.dto.UserResponse;
+import com.likhith.gateway.exception.ValidationException;
+import com.likhith.gateway.mapper.GatewayMapper;
 import com.likhith.gateway.repository.UserRepository;
 
 @Service
@@ -28,6 +30,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	GatewayMapper gatewayMapper;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,56 +47,53 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<UserResponse> getAllUsers() {
 
-		List<UserResponse> userServiceResponseList = new ArrayList<>();
+		List<UserResponse> userResponseList = new ArrayList<>();
 		List<User> users = userRepository.findAll();
 
 		if (!CollectionUtils.isEmpty(users)) {
-			userServiceResponseList = users.stream().map(user -> {
-				UserResponse userServiceResponse = new UserResponse();
-				BeanUtils.copyProperties(user, userServiceResponse);
-				return userServiceResponse;
+			userResponseList = users.stream().map(user -> {
+				UserResponse userResponse = gatewayMapper.mapToUserResponse(user);
+				return userResponse;
 			}).collect(Collectors.toList());
 		}
 
-		return userServiceResponseList;
+		return userResponseList;
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN','USER')")
+	@PreAuthorize("hasAnyRole('ADMIN','USER','CONSUMER')")
 	public UserResponse getUser(String username) {
 
-		UserResponse userResponse = new UserResponse();
+		UserResponse userResponse = null;
 		Optional<User> user = userRepository.findByUsername(username);
 
 		if (user.isPresent()) {
-			BeanUtils.copyProperties(user.get(), userResponse);
-			return userResponse;
-		} else {
-			return null;
+			userResponse = gatewayMapper.mapToUserResponse(user.get());
 		}
+
+		return userResponse;
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	public UserResponse getOtherUser(String username) {
 
-		UserResponse userResponse = new UserResponse();
+		UserResponse userResponse = null;
 		Optional<User> user = userRepository.findByUsername(username);
 
 		if (user.isPresent()) {
-			BeanUtils.copyProperties(user.get(), userResponse);
-			return userResponse;
-		} else {
-			return null;
+			userResponse = gatewayMapper.mapToUserResponse(user.get());
 		}
+
+		return userResponse;
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	public String createUser(User user) {
+	public UserResponse createUser(User user) {
 
 		String message = null;
 		Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
 
 		if (userFromDB.isPresent()) {
-			message = "User already available";
+			throw new ValidationException(HttpStatus.BAD_REQUEST.value(), "User already available");
 		} else {
 			String encodedPassword = passwordEncoder.encode(user.getPassword());
 			user.setPassword(encodedPassword);
@@ -100,17 +102,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 			message = "User created successfully";
 		}
 
-		return message;
+		return new UserResponse(message);
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN','USER')")
-	public String updateUser(User user) {
+	@PreAuthorize("hasAnyRole('ADMIN','USER','CONSUMER')")
+	public UserResponse updateUser(User user) {
 
 		String message = null;
 		Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
 
 		if (userFromDB.isEmpty()) {
-			message = "No user found that can be updated";
+			throw new ValidationException(HttpStatus.NOT_FOUND.value(), "No user found that can be updated");
 		} else {
 			boolean anyUpdate = false;
 
@@ -128,26 +130,26 @@ public class CustomUserDetailsService implements UserDetailsService {
 				userRepository.save(userFromDB.get());
 				message = "User updated successfully";
 			} else {
-				message = "Nothing to update";
+				throw new ValidationException(HttpStatus.BAD_REQUEST.value(), "Nothing to update");
 			}
 		}
 
-		return message;
+		return new UserResponse(message);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	public String updateOtherUser(User user) {
+	public UserResponse updateOtherUser(User user) {
 
 		String message = null;
 		Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
 
 		if (userFromDB.isEmpty()) {
-			message = "No user found that can be updated";
+			throw new ValidationException(HttpStatus.NOT_FOUND.value(), "No user found that can be updated");
 		} else {
 			boolean anyUpdate = false;
 
 			if (!ObjectUtils.isEmpty(user.getPassword())) {
-				return "Only SELF USER can update the password";
+				throw new ValidationException(HttpStatus.BAD_REQUEST.value(), "Only SELF USER can update the password");
 			}
 			if (!ObjectUtils.isEmpty(user.getRoles())) {
 				userFromDB.get().setRoles(user.getRoles());
@@ -158,45 +160,45 @@ public class CustomUserDetailsService implements UserDetailsService {
 				userRepository.save(userFromDB.get());
 				message = "User updated successfully";
 			} else {
-				message = "Nothing to update";
+				throw new ValidationException(HttpStatus.BAD_REQUEST.value(), "Nothing to update");
 			}
 		}
 
-		return message;
+		return new UserResponse(message);
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN','USER')")
-	public String deleteUser(String username) {
+	@PreAuthorize("hasAnyRole('ADMIN','USER','CONSUMER')")
+	public UserResponse deleteUser(String username) {
 
 		String message = null;
 		Optional<User> userFromDB = userRepository.findByUsername(username);
 
 		if (userFromDB.isEmpty()) {
-			message = "No user found that can be deleted";
+			throw new ValidationException(HttpStatus.NOT_FOUND.value(), "No user found that can be deleted");
 		} else {
 			userRepository.delete(userFromDB.get());
 
 			message = "User deleted successfully";
 		}
 
-		return message;
+		return new UserResponse(message);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	public String deleteOtherUser(String username) {
+	public UserResponse deleteOtherUser(String username) {
 
 		String message = null;
 		Optional<User> userFromDB = userRepository.findByUsername(username);
 
 		if (userFromDB.isEmpty()) {
-			message = "No user found that can be deleted";
+			throw new ValidationException(HttpStatus.NOT_FOUND.value(), "No user found that can be deleted");
 		} else {
 			userRepository.delete(userFromDB.get());
 
 			message = "User deleted successfully";
 		}
 
-		return message;
+		return new UserResponse(message);
 	}
 
 	public UserRepository getUserRepository() {

@@ -10,7 +10,7 @@ public class GatewayController {
 
 	@GetMapping
 	public String test() {
-		return "test";
+		return "Success";
 	}
 
 }
