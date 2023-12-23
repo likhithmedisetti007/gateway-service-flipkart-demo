@@ -13,8 +13,8 @@ spring:
     gateway:
       mvc:
         routes:
-          - id: category-service
-            uri: lb://category-service
+          - id: category-service-flipkart-demo
+            uri: lb://category-service-flipkart-demo
             predicates:
               - Path=/category/**
   data:

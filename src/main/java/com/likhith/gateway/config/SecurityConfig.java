@@ -6,13 +6,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.likhith.gateway.document.User;
@@ -37,12 +37,20 @@ public class SecurityConfig {
 	}
 
 	@Bean
+	AuthenticationEntryPoint authenticationEntryPoint() {
+		return new CustomAuthenticationEntryPoint();
+	}
+
+	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(
-						authorizeRequests -> authorizeRequests.requestMatchers("/category/**").hasAnyRole("ADMIN")
-								.requestMatchers("/category/**").hasAnyRole("CONSUMER").anyRequest().authenticated())
-				.httpBasic(Customizer.withDefaults()).userDetailsService(mongoUserDetails()).build();
+		http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/category/protected/**")
+						.hasRole("ADMIN").requestMatchers("/category/private/**").hasAnyRole("ADMIN", "CONSUMER")
+						.requestMatchers("/category/public/**").permitAll().requestMatchers("/user/**")
+						.hasAnyRole("ADMIN", "USER").anyRequest().authenticated())
+				.httpBasic(t -> t.authenticationEntryPoint(authenticationEntryPoint()))
+				.userDetailsService(mongoUserDetails());
+		return http.build();
 	}
 
 	@Bean

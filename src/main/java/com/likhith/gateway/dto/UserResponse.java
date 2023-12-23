@@ -1,5 +1,7 @@
 package com.likhith.gateway.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.likhith.gateway.exception.ErrorMessage;
 
@@ -13,6 +15,7 @@ public class UserResponse {
 
 	private String id;
 	private String username;
+	private List<String> roles;
 	private String message;
 	private ErrorMessage error;
 
