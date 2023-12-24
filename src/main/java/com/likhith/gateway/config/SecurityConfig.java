@@ -46,7 +46,7 @@ public class SecurityConfig {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/category/protected/**")
 						.hasRole("ADMIN").requestMatchers("/category/private/**").hasAnyRole("ADMIN", "CONSUMER")
-						.requestMatchers("/category/public/**").permitAll().requestMatchers("/user/**")
+						.requestMatchers("/actuator/**", "/category/public/**").permitAll().requestMatchers("/user/**")
 						.hasAnyRole("ADMIN", "USER").anyRequest().authenticated())
 				.httpBasic(t -> t.authenticationEntryPoint(authenticationEntryPoint()))
 				.userDetailsService(mongoUserDetails());
