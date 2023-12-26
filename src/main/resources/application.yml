@@ -13,10 +13,18 @@ spring:
     gateway:
       mvc:
         routes:
-          - id: category-service-flipkart-demo
+          - id: category-service-flipkart-demo-public
             uri: lb://category-service-flipkart-demo
             predicates:
-              - Path=/category/**
+              - Path=/public/category/**
+          - id: category-service-flipkart-demo-private
+            uri: lb://category-service-flipkart-demo
+            predicates:
+              - Path=/private/category/**
+          - id: category-service-flipkart-demo-protected
+            uri: lb://category-service-flipkart-demo
+            predicates:
+              - Path=/protected/category/**
   data:
     mongodb:
       uri: mongodb://localhost:27017/
