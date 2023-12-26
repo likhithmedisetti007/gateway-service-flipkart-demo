@@ -1,0 +1,961 @@
+{
+	"info": {
+		"_postman_id": "12a1db0b-18ee-436d-a118-c2de482f08aa",
+		"name": "Internal Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14715708"
+	},
+	"item": [
+		{
+			"name": "gateway-service-flipkart-demo",
+			"item": [
+				{
+					"name": "category-service-flipkart-demo",
+					"item": [
+						{
+							"name": "getAllCategories",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9008/category/public/getAllCategories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9008",
+									"path": [
+										"category",
+										"public",
+										"getAllCategories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllSubCategories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9008/category/public/fashion/getAllSubCategories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9008",
+									"path": [
+										"category",
+										"public",
+										"fashion",
+										"getAllSubCategories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refreshCategoryList",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "Likhith",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "Likhith",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9008/category/protected/refreshCategoryList",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9008",
+									"path": [
+										"category",
+										"protected",
+										"refreshCategoryList"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllProducts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9008/category/public/electronics/mobile/getAllProducts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9008",
+									"path": [
+										"category",
+										"public",
+										"electronics",
+										"mobile",
+										"getAllProducts"
+									],
+									"query": [
+										{
+											"key": "availability",
+											"value": "false",
+											"disabled": true
+										},
+										{
+											"key": "minPrice",
+											"value": "30",
+											"disabled": true
+										},
+										{
+											"key": "maxPrice",
+											"value": "55",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addProduct",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "Likhith",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "Likhith",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 29.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 1,\r\n        \"available\": 1,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9008/category/protected/electronics/mobile/addProduct",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9008",
+									"path": [
+										"category",
+										"protected",
+										"electronics",
+										"mobile",
+										"addProduct"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateProduct",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "Likhith",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "Likhith",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 19.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 2,\r\n        \"available\": 2,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9008/category/protected/electronics/mobile/updateProduct",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9008",
+									"path": [
+										"category",
+										"protected",
+										"electronics",
+										"mobile",
+										"updateProduct"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteProduct",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "Likhith",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "Likhith",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 19.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 2,\r\n        \"available\": 2,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9008/category/protected/electronics/mobile/deleteProduct",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9008",
+									"path": [
+										"category",
+										"protected",
+										"electronics",
+										"mobile",
+										"deleteProduct"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "test",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9008/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9008/user/getAllUsers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"user",
+								"getAllUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9008/user/getUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"user",
+								"getUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOtherUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9008/user/getOtherUser/Sai",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"user",
+								"getOtherUser",
+								"Sai"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Sai\",\r\n    \"password\": \"Sai\",\r\n    \"roles\": [\r\n        \"CONSUMER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9008/user/createUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"user",
+								"createUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Likhith\",\r\n    \"password\": \"New Likihth\",\r\n    \"roles\": [\r\n        \"USER\",\"ADMIN\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9008/user/updateUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"user",
+								"updateUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOtherUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Sai\",\r\n    \"roles\": [\r\n        \"USER\",\"CONSUMER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9008/user/updateOtherUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"user",
+								"updateOtherUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9008/user/deleteUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"user",
+								"deleteUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOtherUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Likhith",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Likhith",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9008/user/deleteOtherUser/Sai",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9008",
+							"path": [
+								"user",
+								"deleteOtherUser",
+								"Sai"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category-service-flipkart-demo",
+			"item": [
+				{
+					"name": "getAllCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9009/category/public/getAllCategories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9009",
+							"path": [
+								"category",
+								"public",
+								"getAllCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllSubCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9009/category/public/fashion/getAllSubCategories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9009",
+							"path": [
+								"category",
+								"public",
+								"fashion",
+								"getAllSubCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshCategoryList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9009/category/protected/refreshCategoryList",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9009",
+							"path": [
+								"category",
+								"protected",
+								"refreshCategoryList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9009/category/public/fashion/shirt/getAllProducts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9009",
+							"path": [
+								"category",
+								"public",
+								"fashion",
+								"shirt",
+								"getAllProducts"
+							],
+							"query": [
+								{
+									"key": "availability",
+									"value": "false",
+									"disabled": true
+								},
+								{
+									"key": "minPrice",
+									"value": "30",
+									"disabled": true
+								},
+								{
+									"key": "maxPrice",
+									"value": "55",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 29.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 1,\r\n        \"available\": 1,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9009/category/protected/fashion/shirt/addProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9009",
+							"path": [
+								"category",
+								"protected",
+								"fashion",
+								"shirt",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 19.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 2,\r\n        \"available\": 2,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9009/category/protected/fashion/shirt/updateProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9009",
+							"path": [
+								"category",
+								"protected",
+								"fashion",
+								"shirt",
+								"updateProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 19.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 2,\r\n        \"available\": 2,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9009/category/protected/fashion/shirt/deleteProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9009",
+							"path": [
+								"category",
+								"protected",
+								"fashion",
+								"shirt",
+								"deleteProduct"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fashion-service-flipkart-demo",
+			"item": [
+				{
+					"name": "getAllProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9010/fashion/shirt/getAllProducts?availability=false&minPrice=30&maxPrice=55",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9010",
+							"path": [
+								"fashion",
+								"shirt",
+								"getAllProducts"
+							],
+							"query": [
+								{
+									"key": "availability",
+									"value": "false"
+								},
+								{
+									"key": "minPrice",
+									"value": "30"
+								},
+								{
+									"key": "maxPrice",
+									"value": "55"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 29.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 1,\r\n        \"available\": 1,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9010/fashion/shirt/addProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9010",
+							"path": [
+								"fashion",
+								"shirt",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 19.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 2,\r\n        \"available\": 2,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9010/fashion/shirt/updateProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9010",
+							"path": [
+								"fashion",
+								"shirt",
+								"updateProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test\",\r\n    \"brand\": \"Test\",\r\n    \"description\": \"Test\",\r\n    \"price\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 19.99\r\n    },\r\n    \"inventory\": {\r\n        \"total\": 2,\r\n        \"available\": 2,\r\n        \"reserved\": 0\r\n    },\r\n    \"attributes\": [\r\n        {\r\n            \"name\": \"Test\",\r\n            \"value\": \"Test\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9010/fashion/shirt/deleteProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9010",
+							"path": [
+								"fashion",
+								"shirt",
+								"deleteProduct"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
